@@ -1,32 +1,39 @@
 create database sistema_vendas_22c;
 use sistema_vendas_22c;
 
-create table cliente(
-	id_cliente		int primary key auto_increment,
-	nm_cliente		varchar(30),
-	ds_endereco		varchar(60),
-    nm_email		varchar(75),
-    nr_celular		bigint(11),
-    dt_nascimento	date
+CREATE TABLE Clientes (
+    ID_cliente INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(100),
+    Endereco VARCHAR(255),
+    Email VARCHAR(100),
+    Celular VARCHAR(20),
+    Data_de_nascimento DATE
 );
 
-create table produtos(
-	id_produtos		int primary key auto_increment,
-	nm_produto		varchar(30),
-    nr_preco		decimal,
-    ds_descricao	varchar(100),
-    nr_qtdEstoque	int
+CREATE TABLE Produtos (
+    ID_produto INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(100),
+    Preco DECIMAL(10, 2),
+    Descricao TEXT,
+    Quantidade_em_estoque INT
 );
 
-create table pedidos(
-	id_pedido		int primary key auto_increment,
-    nr_numPedido	int,
-    dt_compra		date,
-    nr_valor		decimal,
-    dt_entrega		int
+CREATE TABLE Pedidos (
+    ID_pedido INT AUTO_INCREMENT PRIMARY KEY,
+    ID_cliente INT,
+    Data_de_compra DATE,
+    Valor_total DECIMAL(10, 2),
+    Data_estimada_de_entrega DATE,
+    FOREIGN KEY (ID_cliente) REFERENCES Clientes(ID_cliente)
 );
 
-create table itens(
-	id_itens		int primary key auto_increment,
-	
+CREATE TABLE Itens_pedido (
+    ID_item INT AUTO_INCREMENT PRIMARY KEY,
+    ID_pedido INT,
+    ID_produto INT,
+    Quantidade INT,
+    Valor_unitario DECIMAL(10, 2),
+    Valor_total DECIMAL(10, 2),
+    FOREIGN KEY (ID_pedido) REFERENCES Pedidos(ID_pedido),
+    FOREIGN KEY (ID_produto) REFERENCES Produtos(ID_produto)
 );
